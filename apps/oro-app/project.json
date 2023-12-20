@@ -1,0 +1,53 @@
+{
+  "name": "oro-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/oro-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/oro-app",
+        "main": "apps/oro-app/src/main.ts",
+        "tsConfig": "apps/oro-app/tsconfig.app.json",
+        "assets": ["apps/oro-app/src/assets"],
+        "webpackConfig": "apps/oro-app/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "oro-app:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "oro-app:build:development"
+        },
+        "production": {
+          "buildTarget": "oro-app:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/oro-app/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
